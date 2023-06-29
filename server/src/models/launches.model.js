@@ -1,3 +1,5 @@
+// const launches = require('./launches.mongo');
+
 //remember to edit it when adding cluster
 const launches = new Map();
 
