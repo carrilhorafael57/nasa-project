@@ -1,3 +1,4 @@
+//remember to edit it when adding cluster
 const launches = new Map();
 
 let latestFlightNumber = 100;
