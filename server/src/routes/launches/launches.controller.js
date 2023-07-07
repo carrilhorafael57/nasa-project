@@ -5,11 +5,17 @@ const {
   scheduleNewLaunch,
 } = require('../../models/launches.model');
 
+const { getPagination } = require('../../services/query');
+
 async function httpGetAllLaunches(req, res) {
-  /**
-   * Transform into json from map
-   */
-  return res.status(200).json(await getAllLaunches());
+  const { skip, limit } = getPagination(req.query);
+  return res.status(200).json(await getAllLaunches(skip, limit));
+}
+
+async function httpGetLaunchWithId(req, res) {
+  const launchId = Number(req.params.id);
+
+  return res.status(200).json(await existLaunchWithId(launchId));
 }
 
 async function httpAddNewLaunch(req, res) {
@@ -67,4 +73,5 @@ module.exports = {
   httpGetAllLaunches,
   httpAddNewLaunch,
   httpAbortLaunch,
+  httpGetLaunchWithId,
 };
