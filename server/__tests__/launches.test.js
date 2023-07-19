@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { mongoConnect, mongoDisconnect } = require('../src/services/mongo');
+const { mongoConnect } = require('../src/services/mongo');
 
 describe('Launches API', () => {
   beforeAll(async () => {
