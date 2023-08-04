@@ -18,6 +18,7 @@ RUN npm run build --prefix client
 
 # Copying server source code
 COPY server/ server/
+RUN npm i
 
 USER node
 

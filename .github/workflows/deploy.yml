@@ -1,0 +1,39 @@
+name: NASA Project Deploy
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+jobs:
+  build:
+    env:
+      # Used to disable watch mode on test scripts
+      CI: true
+      MONGO_URL: mongodb://localhost/nasa
+    strategy:
+      matrix:
+        node-version: [16.x]
+        mongodb-version: ['4.4']
+    runs-on: ubuntu-latest
+    concurrency: ci-${{github.ref}}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js version ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: MongoDB for GitHub Actions
+        uses: timgchile/mongodb-github-action@1.7.4
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+      - run: npm install
+      - run: npm install --prefix client
+      - run: npm install --prefix server
+      - run: npm ci
+      - run: npm run build
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+            folder: build
+            branch: dev
