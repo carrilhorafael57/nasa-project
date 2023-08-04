@@ -1,4 +1,4 @@
-name: NASA Project Deploy
+name: NASA Project Deploy to GH Pages
 on:
   push:
     branches: [dev]
